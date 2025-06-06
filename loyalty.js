@@ -11,6 +11,8 @@ function calculateLoyaltyPoints(cart) {
 
     if (item.type === 'standard') {
       total += Math.floor(item.price / 10);
+    } else if (item.type === 'premium') {
+      total += Math.floor(item.price / 10) * 2;
     }
   }
 

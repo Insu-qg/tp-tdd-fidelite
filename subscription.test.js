@@ -161,3 +161,33 @@ describe('Renewal Reason', () => {
     });
   });
 });
+
+describe('Performance Tests', () => {
+  test('should handle 1000 subscriptions efficiently', () => {
+    const subscriptions = Array.from({ length: 1000 }, (_, i) => ({
+      status: i % 2 === 0 ? 'active' : 'canceled',
+      endDate: '2024-01-01',
+      hasBeenRenewed: i % 3 === 0,
+      unpaidDebt: i % 4 === 0,
+      isTrial: i % 5 === 0
+    }));
+
+    const startTime = performance.now();
+    
+    subscriptions.forEach(sub => {
+      canRenewSubscription(sub, '2024-06-01');
+      getRenewalReason(sub, '2024-06-01');
+    });
+
+    const endTime = performance.now();
+    const executionTime = endTime - startTime;
+
+    console.log(`Performance test results:
+      - Number of subscriptions: 1000
+      - Total execution time: ${executionTime.toFixed(2)}ms
+      - Average time per subscription: ${(executionTime / 1000).toFixed(2)}ms
+    `);
+
+    expect(executionTime).toBeLessThan(100); // Should complete in under 100ms
+  });
+});

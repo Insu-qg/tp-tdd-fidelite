@@ -45,5 +45,14 @@ describe('Invalid or unknown product entries', () => {
       ];
       expect(calculateLoyaltyPoints(cart)).toBe(5);
     });
+    test('should handle null items gracefully', () => {
+      const cart = [
+        null,
+        { type: 'standard', price: 20 }
+      ];
+      expect(calculateLoyaltyPoints(cart)).toBe(2);
+    });
 });
+
+
 });

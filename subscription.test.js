@@ -90,3 +90,29 @@ describe('Subscription Renewal', () => {
     expect(canRenewSubscription(subscription, currentDate)).toBe(false);
   });
 });
+
+describe('Edge Cases', () => {
+  test('should handle missing fields gracefully', () => {
+    const incompleteSubscriptions = [
+      {},
+      { status: 'active' },
+      { status: 'active', endDate: '2024-01-01' }
+    ];
+    
+    incompleteSubscriptions.forEach(subscription => {
+      expect(canRenewSubscription(subscription, '2024-06-01')).toBe(false);
+    });
+  });
+
+  test('should handle invalid date formats', () => {
+    const subscription = {
+      status: 'active',
+      endDate: 'invalid-date',
+      hasBeenRenewed: false,
+      unpaidDebt: false,
+      isTrial: false
+    };
+    
+    expect(canRenewSubscription(subscription, '2024-06-01')).toBe(false);
+  });
+});

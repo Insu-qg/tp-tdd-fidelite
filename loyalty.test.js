@@ -32,4 +32,9 @@ describe("Loyalty Points", () => {
     expect(calculateLoyaltyPoints(null)).toBe(0);
     expect(calculateLoyaltyPoints(undefined)).toBe(0);
   });
+
+  test('should return 0 for an empty cart', () => {
+    expect(calculateLoyaltyPoints([])).toBe(0);
+  });
+
 });

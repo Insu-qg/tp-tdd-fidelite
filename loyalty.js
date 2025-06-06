@@ -5,8 +5,6 @@ function calculateLoyaltyPoints(cart) {
   let amount = 0;
 
   for (const item of cart) {
-    if (!item || typeof item.price !== 'number') continue;
-
     amount += item.price;
 
     if (item.type === 'standard') {
@@ -16,9 +14,6 @@ function calculateLoyaltyPoints(cart) {
     }
   }
 
-  if (amount > 200) {
-    total += 10;
-  }
 
   return total;
 }

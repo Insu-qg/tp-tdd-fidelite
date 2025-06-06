@@ -53,4 +53,16 @@ describe('Subscription Renewal', () => {
       expect(canRenewSubscription(subscription, currentDate)).toBe(false);
     });
   });
+  test('should deny renewal when unpaid debt exists', () => {
+    const subscription = {
+      status: 'active',
+      endDate: '2024-01-01',
+      hasBeenRenewed: false,
+      unpaidDebt: true,
+      isTrial: false
+    };
+    const currentDate = '2024-06-01';
+    
+    expect(canRenewSubscription(subscription, currentDate)).toBe(false);
+  });
 });

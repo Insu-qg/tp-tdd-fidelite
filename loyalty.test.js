@@ -55,4 +55,29 @@ describe('Invalid or unknown product entries', () => {
 });
 
 
+describe('Performance Tests', () => {
+  test('should handle a cart with 1000 products efficiently', () => {
+    // Création d'un panier avec 1000 produits
+    const cart = Array.from({ length: 1000 }, (_, index) => ({
+      type: index % 2 === 0 ? 'standard' : 'premium',
+      price: Math.floor(Math.random() * 100) + 1 // Prix entre 1 et 100€
+    }));
+
+    // Mesure du temps d'exécution
+    const startTime = performance.now();
+    const points = calculateLoyaltyPoints(cart);
+    const endTime = performance.now();
+    const executionTime = endTime - startTime;
+
+    // Vérifications
+    expect(points).toBeGreaterThan(0);
+    expect(executionTime).toBeLessThan(100); // Le calcul devrait prendre moins de 100ms
+    
+    console.log(`Performance test results:
+      - Number of products: 1000
+      - Execution time: ${executionTime.toFixed(2)}ms
+      - Total points: ${points}
+    `);
+  });
+  });
 });

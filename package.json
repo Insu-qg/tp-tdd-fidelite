@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "loyalty": "jest loyalty.test.js",
+    "subscription": "jest subscription.test.js"
   },
   "keywords": [],
   "author": "",

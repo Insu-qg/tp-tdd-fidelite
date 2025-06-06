@@ -37,4 +37,20 @@ describe('Subscription Renewal', () => {
     
     expect(canRenewSubscription(subscription, currentDate)).toBe(false);
   });
+  test('should deny renewal for non-active subscriptions', () => {
+    const statuses = ['canceled', 'paused', 'suspended'];
+    
+    statuses.forEach(status => {
+      const subscription = {
+        status,
+        endDate: '2024-01-01',
+        hasBeenRenewed: false,
+        unpaidDebt: false,
+        isTrial: false
+      };
+      const currentDate = '2024-06-01';
+      
+      expect(canRenewSubscription(subscription, currentDate)).toBe(false);
+    });
+  });
 });

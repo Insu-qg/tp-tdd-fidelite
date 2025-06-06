@@ -26,4 +26,10 @@ describe("Loyalty Points", () => {
     const cart = [{ type: "standard", price: 100 }, { type: "standard", price: 120 }];
     expect(calculateLoyaltyPoints(cart)).toBe(32);
   });
+
+  test("should return 0 points for an invalid cart", () => {
+    expect(calculateLoyaltyPoints("invalid")).toBe(0);
+    expect(calculateLoyaltyPoints(null)).toBe(0);
+    expect(calculateLoyaltyPoints(undefined)).toBe(0);
+  });
 });

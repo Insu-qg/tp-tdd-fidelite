@@ -5,6 +5,7 @@ function calculateLoyaltyPoints(cart) {
   let amount = 0;
 
   for (const item of cart) {
+    
     amount += item.price;
 
     if (item.type === 'standard') {
@@ -12,6 +13,9 @@ function calculateLoyaltyPoints(cart) {
     } else if (item.type === 'premium') {
       total += Math.floor(item.price / 10) * 2;
     }
+  }
+  if (amount > 200) {
+    total += 10;
   }
 
 

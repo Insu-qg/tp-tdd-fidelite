@@ -15,4 +15,15 @@ describe("Loyalty Points", () => {
     expect(calculateLoyaltyPoints(cart)).toBe(4);
   });
 
+  // test supplémentaire aux 2 précédents
+  test("shouldn't return 1 point for 2 standard products at 5€", () => {
+    const cart = [{ type: "standard", price: 5 }, { type: "standard", price: 5 }];
+    expect(calculateLoyaltyPoints(cart)).toBe(0);
+  });
+
+  test("should return 10 points for an amout higher than 200€ in total", () => {
+    // soit 100 => 10 points, 120 => 12 points, total = 22 points + 10 points car total > 200€
+    const cart = [{ type: "standard", price: 100 }, { type: "standard", price: 120 }];
+    expect(calculateLoyaltyPoints(cart)).toBe(32);
+  });
 });

@@ -5,7 +5,8 @@ function calculateLoyaltyPoints(cart) {
   let amount = 0;
 
   for (const item of cart) {
-    
+    if (typeof item.price !== 'number' || item.price < 0) 
+      continue; // Skip invalid price entries
     amount += item.price;
 
     if (item.type === 'standard') {

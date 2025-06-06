@@ -37,4 +37,13 @@ describe("Loyalty Points", () => {
     expect(calculateLoyaltyPoints([])).toBe(0);
   });
 
+describe('Invalid or unknown product entries', () => {
+    test('should skip products with invalid price', () => {
+      const cart = [
+        { type: 'standard', price: 50 },
+        { type: 'standard', price: 'invalid' }
+      ];
+      expect(calculateLoyaltyPoints(cart)).toBe(5);
+    });
+});
 });

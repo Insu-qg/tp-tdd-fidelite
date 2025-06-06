@@ -77,4 +77,16 @@ describe('Subscription Renewal', () => {
     
     expect(canRenewSubscription(subscription, currentDate)).toBe(true);
   });
+  test('should deny renewal for trial subscriptions', () => {
+    const subscription = {
+      status: 'active',
+      endDate: '2024-01-01',
+      hasBeenRenewed: false,
+      unpaidDebt: false,
+      isTrial: true
+    };
+    const currentDate = '2024-06-01';
+    
+    expect(canRenewSubscription(subscription, currentDate)).toBe(false);
+  });
 });

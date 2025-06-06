@@ -17,11 +17,13 @@ function canRenewSubscription(subscription, currentDate) {
 }
 
 function getRenewalReason(subscription, currentDate) {
-  if (!subscription || typeof subscription !== 'object') {
+  // Vérification du type de subscription
+  if (!subscription || typeof subscription !== 'object' || Array.isArray(subscription)) {
     return 'invalidSubscription';
   }
 
-  if (subscription.status !== 'active') {
+  // Vérification du statut
+  if (!subscription.status || subscription.status !== 'active') {
     return 'inactiveSubscription';
   }
 

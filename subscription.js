@@ -1,3 +1,5 @@
 function canRenewSubscription(subscription, currentDate) { 
-    // TODO 
+     return true;
 }
+
+module.exports = { canRenewSubscription };

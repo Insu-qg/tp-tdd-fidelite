@@ -1,4 +1,4 @@
-const { canRenewSubscription } = require('./subscription');
+import { canRenewSubscription } from './subscription';
 
 describe('Subscription Renewal', () => {
   test('should allow renewal for active subscription with passed end date', () => {

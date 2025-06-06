@@ -1,4 +1,4 @@
-import { canRenewSubscription } from './subscription';
+import { canRenewSubscription, getRenewalReason } from './subscription';
 
 describe('Subscription Renewal', () => {
   test('should allow renewal for active subscription with passed end date', () => {
@@ -114,5 +114,48 @@ describe('Edge Cases', () => {
     };
     
     expect(canRenewSubscription(subscription, '2024-06-01')).toBe(false);
+  });
+});
+
+describe('Renewal Reason', () => {
+  test('should return OK for valid renewal', () => {
+    const subscription = {
+      status: 'active',
+      endDate: '2024-01-01',
+      hasBeenRenewed: false,
+      unpaidDebt: false,
+      isTrial: false
+    };
+    
+    expect(getRenewalReason(subscription, '2024-06-01')).toBe('OK');
+  });
+
+  test('should return correct reasons for invalid cases', () => {
+    const testCases = [
+      {
+        subscription: { status: 'canceled', endDate: '2024-01-01' },
+        expected: 'inactiveSubscription'
+      },
+      {
+        subscription: { status: 'active', endDate: '2024-12-01' },
+        expected: 'futureEndDate'
+      },
+      {
+        subscription: { status: 'active', endDate: '2024-01-01', hasBeenRenewed: true },
+        expected: 'alreadyRenewed'
+      },
+      {
+        subscription: { status: 'active', endDate: '2024-01-01', unpaidDebt: true },
+        expected: 'unpaidDebt'
+      },
+      {
+        subscription: { status: 'active', endDate: '2024-01-01', isTrial: true },
+        expected: 'trial'
+      }
+    ];
+
+    testCases.forEach(({ subscription, expected }) => {
+      expect(getRenewalReason(subscription, '2024-06-01')).toBe(expected);
+    });
   });
 });
